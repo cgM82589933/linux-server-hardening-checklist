@@ -223,7 +223,7 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 			# chown root:root /etc/gshadow
 			```
 
-14. - [x] Additional process hardening
+14. - [o] Additional process hardening
 	- [] Restrict Core Dumps
 		- [] Adding `hard core 0` to the "/etc/security/limits.conf" file
 		- [] Adding `fs.suid_dumpable = 0` to the "/etc/sysctl.conf" file
