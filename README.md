@@ -14,16 +14,16 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 	- Public: <public ip>
 
 - MAC Address:
-	- <MAC address>
+	- `<MAC address>`
 
 - Servicing Technician:
-	- <full name>
+	- `<full name>`
 
 - Date:
-	- <date>
+	- `<date>`
 
-- Asset Number:
-	- <asset number>
+- Asset Number (Optional):
+	- `<asset number>`
 
 #### Hardening Checklist
 
@@ -64,10 +64,10 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 		- [] Add the following line: `blacklist usb_storage`
 	- [] Edit "/etc/rc.local"
 		- [] Add the following lines:
-			- ```\n
-			  modprobe -r usb_storage\n
-			  exit 0\n
-			  ```\n
+			- ```
+			  modprobe -r usb_storage
+			  exit 0
+			  ```
 
 6. [] System Update
 	- [] `#apt update && apt upgrade -y && apt autoremove -y`
@@ -116,17 +116,17 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 		- Add the following line `net.ipv4_forward=0` to "/etc/sysctl.conf"
 	- [] Disable the Send Packet Redirects
 		- Add the following lines:
-			```\n
-			net.ipv4.conf.all.send_redirects=0\n
-			net.ipv4.conf.default.send_redirects=0\n
-			```\n
+			```
+			net.ipv4.conf.all.send_redirects=0
+			net.ipv4.conf.default.send_redirects=0
+			```
 		  to "/etc/sysctl.conf
 	- [] Disable ICMP Redirects Acceptance
 		- Add the following lines:
-			```\n
-			net.ipv4.conf.all.accept_redirects=0\n
-			net.ipv4.conf.default.accept_redirects=0\n
-			```\n
+			```
+			net.ipv4.conf.all.accept_redirects=0
+			net.ipv4.conf.default.accept_redirects=0
+			```
 		  to "/etc/sysctl.conf
 	- [] Enable Bad Error Message Protection
 		- Add the following line `net.ipv4.icmp_ignore_bogus_error_responses=1` to "/etc/sysctl.conf"
@@ -135,23 +135,23 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 
 12. [] Password policies
 	- Add the following lines:
-		```\n
-		auth	sufficient	pam_unix.so likeauth nullok\n
-		password	sufficient	pam_unix.so remember=4\n
-		```\n
+		```
+		auth	sufficient	pam_unix.so likeauth nullok
+		password	sufficient	pam_unix.so remember=4
+		```
 	  to "/etc/pam.d/common-password"
 	- [] To protect against dictionary and brute-force attacks
 		- [] Add the following line `/lib/security/$ISA/pam_cracklib.so retry=3 minlen=8 lcredit=-1 ucredit=-2 dcredit=-2 ocredit=-1` to "/etc/pam.d/system-auth"
 	- [] Lock account after 5 failed attempts
 		- [] Add the following lines:
-			```\n
-			auth required pam_env.so\n
-			auth required pam_faillock.so preauth audit silent deny=5 unlock_timer=604800\n
-			auth [success=1 default=bad] pam_unix.so\n
-			auth [default=die] pam_faillock.so authfail audit deny=5 unlock_timer=604800\n
-			auth sufficient pam_faillock.so authsucc audit deny=5 unlock_timer=604800\n
-			auth required pam_deny.so\n
-			```\n
+			```
+			auth required pam_env.so
+			auth required pam_faillock.so preauth audit silent deny=5 unlock_timer=604800
+			auth [success=1 default=bad] pam_unix.so
+			auth [default=die] pam_faillock.so authfail audit deny=5 unlock_timer=604800
+			auth sufficient pam_faillock.so authsucc audit deny=5 unlock_timer=604800
+			auth required pam_deny.so
+			```
 		  to "/etc/pam.d/password-auth"
 		- **After 5 failed attempts only an administrator can unlock account with the following command:**
 			- Run `# /usr/sbin/faillock --user <userlocked> --reset`
@@ -161,19 +161,19 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 	- [] Restrict access to the **`su`** command
 		- [] Add the following line: `auth required pam_wheel.so use_uid` to "/etc/pam.d/su"
 	- [] Disable the system accounts for non-root users with the following script:
-		- ```\n
-		  #!/bin/bash\n
-		  for user in `awk -F: '($3 < 500) { print $1 }' /etc/passwd`; do\n
-		  if [ $user != "root" ]\n
-		  then\n
-			/usr/sbin/usermod -L $user\n
-		  	if [ $user != "sync" ] && [ $user != "shutdown" ] && [ $user != "halt" ]\n
-		  	then\n
-				/usr/sbin/usermod -s /sbin/nologin $user\n
-		  	fi\n
-		  fi\n
-		  done\n
-		  ```\n
+		- ```
+		  #!/bin/bash
+		  for user in `awk -F: '($3 < 500) { print $1 }' /etc/passwd`; do
+		  if [ $user != "root" ]
+		  then
+			/usr/sbin/usermod -L $user
+		  	if [ $user != "sync" ] && [ $user != "shutdown" ] && [ $user != "halt" ]
+		  	then
+				/usr/sbin/usermod -s /sbin/nologin $user
+		  	fi
+		  fi
+		  done
+		  ```
 
 13. Permissions and Verifications
 	- [] Set User/Group Owner and Permissions on "/etc/anacrontab", "/etc/crontab" and "/etc/cron.*"
@@ -223,7 +223,7 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 			# chown root:root /etc/gshadow
 			```
 
-14. - [] Additional process hardening
+14. - [x] Additional process hardening
 	- [] Restrict Core Dumps
 		- [] Adding `hard core 0` to the "/etc/security/limits.conf" file
 		- [] Adding `fs.suid_dumpable = 0` to the "/etc/sysctl.conf" file
