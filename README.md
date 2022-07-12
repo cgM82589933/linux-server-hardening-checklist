@@ -223,11 +223,11 @@ Checklist for hardening a Linux server that includes network and kernel hardenin
 			# chown root:root /etc/gshadow
 			```
 
-14. - [o] Additional process hardening
-	- [] Restrict Core Dumps
-		- [] Adding `hard core 0` to the "/etc/security/limits.conf" file
-		- [] Adding `fs.suid_dumpable = 0` to the "/etc/sysctl.conf" file
-	- [] Configure Exec Shield
-		- [] Adding `kernel.exec-shield = 1` to the "/etc/sysctl.conf" file
-	- [] Enable randomized Virtual Memory Region Placement
-		- [] Adding `kernel.randomize_va_space = 2` to the "/etc/sysctl.conf" file
+14. - [ ] Additional process hardening
+	- [ ] Restrict Core Dumps
+		- [ ] Adding `hard core 0` to the "/etc/security/limits.conf" file
+		- [ ] Adding `fs.suid_dumpable = 0` to the "/etc/sysctl.conf" file
+	- [ ] Configure Exec Shield
+		- [ ] Adding `kernel.exec-shield = 1` to the "/etc/sysctl.conf" file
+	- [ ] Enable randomized Virtual Memory Region Placement
+		- [ ] Adding `kernel.randomize_va_space = 2` to the "/etc/sysctl.conf" file
